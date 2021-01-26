@@ -278,11 +278,11 @@ require('telescope').setup{
         -- So, to not map "<C-n>", just put
         ["<c-x>"] = false,
         -- Otherwise, just set the mapping to the function that you want it to be.
-        ["<C-i>"] = actions.hselect,
+        ["<C-i>"] = actions.goto_file_selection_split,
         -- Add up multiple actions
-        ["<CR>"] = actions.select + actions.center,
+        ["<CR>"] = actions.goto_file_selection_edit + actions.center,
         -- You can perform as many actions in a row as you like
-        ["<CR>"] = actions.select + actions.center + my_cool_custom_action,
+        ["<CR>"] = actions.goto_file_selection_edit + actions.center + my_cool_custom_action,
       },
       n = {
         ["<esc>"] = actions.close,
@@ -311,12 +311,12 @@ require('telescope.builtin').fd({ -- or new custom picker's attach_mappings fiel
     end)
 
     -- You can also enhance an action with pre and post action which will run before of after an action
-    actions.hselect:enhance ({
+    actions.goto_file_selection_split:enhance ({
       pre = function()
-      -- Will run before actions.hselect
+      -- Will run before actions.goto_file_selection_split
       end,
       post = function()
-      -- Will run after actions.hselect
+      -- Will run after actions.goto_file_selection_split
       end,
     })
 
@@ -344,12 +344,12 @@ require('telescope.builtin').fd({ -- or new custom picker's attach_mappings fiel
 <!--         -- Code here -->
 <!--       end) -->
 <!--       -- You can also enhance an action with post and post action which will run before of after an action -->
-<!--       actions.hselect:enhance { -->
+<!--       actions.goto_file_selection_split:enhance { -->
 <!--         pre = function() -->
-<!--           -- Will run before actions.hselect -->
+<!--           -- Will run before actions.goto_file_selection_split -->
 <!--         end, -->
 <!--         post = function() -->
-<!--           -- Will run after actions.hselect -->
+<!--           -- Will run after actions.goto_file_selection_split -->
 <!--         end, -->
 <!--       } -->
 <!--       -- Or replace for all commands: edit, new, vnew and tab -->
