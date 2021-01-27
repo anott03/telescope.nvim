@@ -55,6 +55,12 @@ action_mt.create = function(mod)
     assert(#self == 1, "Cannot replace an already combined action")
 
     local action_name = self[1]
+    local actions = require('telescope.actions')
+    if actions.aliases[action_name] then
+      local alias_name = actions.aliases[action_name]
+      print(alias_name)
+      mt._replacements[alias_name] = v
+    end
     mt._replacements[action_name] = v
   end
 
