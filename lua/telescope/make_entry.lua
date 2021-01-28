@@ -2,7 +2,7 @@ local has_devicons, devicons = pcall(require, 'nvim-web-devicons')
 
 local conf = require('telescope.config').values
 local entry_display = require('telescope.pickers.entry_display')
-local path = require('telescope.path')
+local path = require('plenary.path')
 local utils = require('telescope.utils')
 
 local get_default = utils.get_default
@@ -119,7 +119,7 @@ do
     mt_file_entry.cwd = cwd
     mt_file_entry.display = function(entry)
       local hl_group
-      local display = path.make_relative(entry.value, cwd)
+      local display = path:make_relative(entry.value, cwd)
       if shorten_path then
         display = utils.path_shorten(display)
       end
@@ -138,7 +138,7 @@ do
       if raw then return raw end
 
       if k == "path" then
-        local retpath = t.cwd .. path.separator .. t.value
+        local retpath = t.cwd .. path.path.sep .. t.value
         if not vim.loop.fs_access(retpath, "R", nil) then
           retpath = t.value
         end
@@ -195,7 +195,7 @@ do
 
     local execute_keys = {
       path = function(t)
-        return t.cwd .. path.separator .. t.filename, false
+        return t.cwd .. path.path.sep .. t.filename, false
       end,
 
       filename = function(t)
@@ -482,7 +482,7 @@ function make_entry.gen_from_buffer(opts)
   local make_display = function(entry)
     local display_bufname
     if opts.shorten_path then
-      display_bufname = path.shorten(entry.filename)
+      display_bufname = path:shorten(entry.filename)
     else
       display_bufname = entry.filename
     end
@@ -500,7 +500,7 @@ function make_entry.gen_from_buffer(opts)
   return function(entry)
     local bufname = entry.info.name ~= "" and entry.info.name or '[No Name]'
     -- if bufname is inside the cwd, trim that part of the string
-    bufname = path.normalize(bufname, cwd)
+    bufname = path:normalize(bufname, cwd)
 
     local hidden = entry.info.hidden == 1 and 'h' or 'a'
     local readonly = vim.api.nvim_buf_get_option(entry.bufnr, 'readonly') and '=' or ' '
@@ -812,7 +812,7 @@ function make_entry.gen_from_ctags(opts)
   opts = opts or {}
 
   local cwd = vim.fn.expand(opts.cwd or vim.fn.getcwd())
-  local current_file = path.normalize(vim.fn.expand('%'), cwd)
+  local current_file = path:normalize(vim.fn.expand('%'), cwd)
 
   local display_items = {
     { width = 30 },
@@ -832,7 +832,7 @@ function make_entry.gen_from_ctags(opts)
     local filename
     if not opts.hide_filename then
       if opts.shorten_path then
-        filename = path.shorten(entry.filename)
+        filename = path:shorten(entry.filename)
       else
         filename = entry.filename
       end

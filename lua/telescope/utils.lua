@@ -1,10 +1,10 @@
-local pathlib = require('telescope.path')
+local pathlib = require('plenary.path')
 local Job     = require('plenary.job')
 
 local utils = {}
 
 utils.get_separator = function()
-  return pathlib.separator
+  return pathlib.path.sep
 end
 
 utils.if_nil = function(x, was_nil, was_not_nil)
@@ -186,7 +186,7 @@ function utils.data_directory()
   local sourced_file = require('plenary.debug_utils').sourced_filepath()
   local base_directory = vim.fn.fnamemodify(sourced_file, ":h:h:h")
 
-  return base_directory .. pathlib.separator .. 'data' .. pathlib.separator
+  return base_directory .. utils.get_separator() .. 'data' .. utils.get_separator()
 end
 
 function utils.display_termcodes(str)

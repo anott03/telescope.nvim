@@ -1,5 +1,5 @@
 local from_entry = require('telescope.from_entry')
-local path = require('telescope.path')
+local path = require('plenary.path')
 local utils = require('telescope.utils')
 local putils = require('telescope.previewers.utils')
 local Previewer = require('telescope.previewers.previewer')
@@ -29,7 +29,7 @@ previewers.file_maker = function(filepath, bufnr, opts)
         if opts.callback then opts.callback(bufnr) end
       end)})
     else
-      path.read_file_async(filepath, vim.schedule_wrap(function(data)
+      path:read_async(filepath, vim.schedule_wrap(function(data)
         if not vim.api.nvim_buf_is_valid(bufnr) then return end
         local ok = pcall(vim.api.nvim_buf_set_lines, bufnr, 0, -1, false, vim.split(data, '[\r]?\n'))
         if not ok then return end

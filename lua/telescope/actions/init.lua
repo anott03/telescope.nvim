@@ -3,7 +3,7 @@
 local a = vim.api
 
 local log = require('telescope.log')
-local path = require('telescope.path')
+local path = require('plenary.path')
 local state = require('telescope.state')
 
 local transform_mod = require('telescope.actions.mt').transform_mod
@@ -120,7 +120,7 @@ function actions._goto_file_selection(prompt_bufnr, command)
         vim.cmd(string.format(":tab sb %d", entry_bufnr))
       end
     else
-      filename = path.normalize(vim.fn.fnameescape(filename), vim.fn.getcwd())
+      filename = path:normalize(vim.fn.fnameescape(filename), vim.fn.getcwd())
 
       local bufnr = vim.api.nvim_get_current_buf()
       if filename ~= vim.api.nvim_buf_get_name(bufnr) then

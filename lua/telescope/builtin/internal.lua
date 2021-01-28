@@ -1,7 +1,7 @@
 local actions = require('telescope.actions')
 local finders = require('telescope.finders')
 local make_entry = require('telescope.make_entry')
-local path = require('telescope.path')
+local path = require('plenary.path')
 local pickers = require('telescope.pickers')
 local previewers = require('telescope.previewers')
 local sorters = require('telescope.sorters')
@@ -117,7 +117,7 @@ internal.symbols = function(opts)
 
   local results = {}
   for _, source in ipairs(sources) do
-    local data = vim.fn.json_decode(path.read_file(source))
+    local data = vim.fn.json_decode(path:read(source))
     for _, entry in ipairs(data) do
       table.insert(results, entry)
     end
@@ -272,8 +272,8 @@ end
 
 internal.vim_options = function(opts)
   -- Load vim options.
-  local vim_opts = loadfile(utils.data_directory() .. path.separator .. 'options' ..
-                            path.separator .. 'options.lua')().options
+  local vim_opts = loadfile(utils.data_directory() .. path.path.sep.. 'options' ..
+                            path.path.sep .. 'options.lua')().options
 
   pickers.new(opts, {
     prompt = 'options',
@@ -375,7 +375,7 @@ internal.help_tags = function(opts)
   local delimiter = string.char(9)
   for _, lang in ipairs(langs) do
     for _, file in ipairs(tag_files[lang] or {}) do
-      local lines = vim.split(path.read_file(file), '\n', true)
+      local lines = vim.split(path:read(file), '\n', true)
       for _, line in ipairs(lines) do
         -- TODO: also ignore tagComment starting with ';'
         if not line:match'^!_TAG_' then
