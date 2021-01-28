@@ -20,7 +20,6 @@ path.shorten = function()
 end
 
 path.normalize = function()
-  -- print('DEPRECATED')
   function_is_deprecated('normalize', 'normalize')
 end
 
