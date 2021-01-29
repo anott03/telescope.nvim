@@ -117,7 +117,7 @@ internal.symbols = function(opts)
 
   local results = {}
   for _, source in ipairs(sources) do
-    local data = vim.fn.json_decode(path:read(source))
+    local data = vim.fn.json_decode(path:new(source):read())
     for _, entry in ipairs(data) do
       table.insert(results, entry)
     end
@@ -375,7 +375,7 @@ internal.help_tags = function(opts)
   local delimiter = string.char(9)
   for _, lang in ipairs(langs) do
     for _, file in ipairs(tag_files[lang] or {}) do
-      local lines = vim.split(path:read(file), '\n', true)
+      local lines = vim.split(path:new(file):read(), '\n', true)
       for _, line in ipairs(lines) do
         -- TODO: also ignore tagComment starting with ';'
         if not line:match'^!_TAG_' then

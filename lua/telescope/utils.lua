@@ -93,7 +93,9 @@ end
 
 --     return result
 --   end or nil)
-utils.path_shorten = pathlib.shorten
+utils.path_shorten = function(filename)
+  return pathlib:new(filename):shorten()
+end
 
 utils.path_tail = (function()
   local os_sep = utils.get_separator()
