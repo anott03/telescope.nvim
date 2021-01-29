@@ -120,7 +120,7 @@ function actions._goto_file_selection(prompt_bufnr, command)
         vim.cmd(string.format(":tab sb %d", entry_bufnr))
       end
     else
-      filename = path:new(vim.fn.fnameescape(filename)):normalize()
+      filename = path:new(vim.fn.fnameescape(filename)):normalize(vim.fn.getcwd())
 
       local bufnr = vim.api.nvim_get_current_buf()
       if filename ~= vim.api.nvim_buf_get_name(bufnr) then
