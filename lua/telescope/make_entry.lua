@@ -119,7 +119,7 @@ do
     mt_file_entry.cwd = cwd
     mt_file_entry.display = function(entry)
       local hl_group
-      local display = path:new(entry.value):make_relative()
+      local display = path:new(entry.value):make_relative(cwd)
       if shorten_path then
         display = utils.path_shorten(display)
       end
