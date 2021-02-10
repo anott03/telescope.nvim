@@ -1,8 +1,6 @@
-local log = require('telescope.log')
-
 local path = {}
 
-local function_is_deprecated = function(name, new_name, err)
+local function_is_deprecated = function(name, new_name)
   error('telescope.' .. name .. ' is deprecated. Use plenary.' .. new_name
     .. ' instead')
 end
