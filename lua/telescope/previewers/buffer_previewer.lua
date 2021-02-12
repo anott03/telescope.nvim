@@ -29,7 +29,7 @@ previewers.file_maker = function(filepath, bufnr, opts)
         if opts.callback then opts.callback(bufnr) end
       end)})
     else
-      path:new(filepath):read_async(vim.schedule_wrap(function(data)
+      path:new(filepath):read(vim.schedule_wrap(function(data)
         if not vim.api.nvim_buf_is_valid(bufnr) then return end
         local ok = pcall(vim.api.nvim_buf_set_lines, bufnr, 0, -1, false, vim.split(data, '[\r]?\n'))
         if not ok then return end
